@@ -7,6 +7,8 @@ namespace Spfc\Shared\Infrastructure\Providers;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Spfc\BoundedContext\Notifications\Application\Notify\SendWelcomeNotificationOnUserCreated;
+use Spfc\BoundedContext\Notifications\Domain\Notification;
+use Spfc\BoundedContext\Notifications\Infrastructure\Email\LaravelNotification;
 use Spfc\Shared\Domain\Bus\Event\EventBus;
 use Spfc\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus;
 
@@ -14,6 +16,7 @@ final class SharedServiceProvider extends ServiceProvider
 {
     public array $bindings = [
         EventBus::class => InMemorySymfonyEventBus::class,
+        Notification::class => LaravelNotification::class
     ];
 
     /**
