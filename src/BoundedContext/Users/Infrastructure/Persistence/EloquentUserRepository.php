@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Spfc\BoundedContext\Users\Infrastructure\Persistence;
 
@@ -13,17 +13,25 @@ use Spfc\BoundedContext\Users\Infrastructure\Persistence\Eloquent\UserEloquentMo
 
 final class EloquentUserRepository implements UserRepository
 {
+    /**
+     * @param  User  $user
+     * @return void
+     */
     public function save(User $user): void
     {
-        $model           = new UserEloquentModel();
-        $model->id       = $user->id()->value();
-        $model->name     = $user->name()->value();
+        $model = new UserEloquentModel();
+        $model->id = $user->id()->value();
+        $model->name = $user->name()->value();
         $model->email = $user->email()->value();
         $model->password = $user->password()->value();
 
         $model->save();
     }
 
+    /**
+     * @param  UserId  $id
+     * @return User|null
+     */
     public function search(UserId $id): ?User
     {
         $model = UserEloquentModel::find($id->value());
@@ -32,14 +40,24 @@ final class EloquentUserRepository implements UserRepository
             return null;
         }
 
-        return new User(new UserId($model->id), new UserName($model->name), new UserEmail($model->email)); // TODO
+        // return new User(new UserId($model->id), new UserName($model->name), new UserEmail($model->email)); // TODO
     }
 
-    public function isEmailUnique(string $email): ?bool {
-        return !UserEloquentModel::where('email', '=', $email)->count();
+    /**
+     * @param  string  $email
+     * @return bool|null
+     */
+    public function isEmailUnique(string $email): ?bool
+    {
+        return ! UserEloquentModel::where('email', '=', $email)->count();
     }
 
-    public function isIdUnique(string $id): ?bool {
-        return !UserEloquentModel::where('id', '=', $id)->count();
+    /**
+     * @param  string  $id
+     * @return bool|null
+     */
+    public function isIdUnique(string $id): ?bool
+    {
+        return ! UserEloquentModel::where('id', '=', $id)->count();
     }
 }

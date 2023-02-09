@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Users\UserPutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Users\UserPutController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,5 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::put('/users/{id}',UserPutController::class);
+Route::put('/users/{id}', UserPutController::class);

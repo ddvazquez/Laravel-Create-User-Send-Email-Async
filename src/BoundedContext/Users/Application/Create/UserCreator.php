@@ -1,5 +1,6 @@
-<?php declare(strict_types=1);
+<?php
 
+declare(strict_types=1);
 
 namespace Spfc\BoundedContext\Users\Application\Create;
 
@@ -13,20 +14,28 @@ use Spfc\Shared\Domain\Bus\Event\EventBus;
 
 final class UserCreator
 {
-
     private $repository;
+
     private $bus;
+
+    /**
+     * @param  UserRepository  $repository
+     * @param  EventBus  $bus
+     */
     public function __construct(UserRepository $repository, EventBus $bus)
     {
         $this->repository = $repository;
         $this->bus = $bus;
     }
 
+    /**
+     * @param  CreateUserRequest  $request
+     * @return void
+     */
     public function __invoke(CreateUserRequest $request)
     {
-
-        $id       = new UserId($request->id());
-        $name     = new UserName($request->name());
+        $id = new UserId($request->id());
+        $name = new UserName($request->name());
         $email = new UserEmail($request->email());
         $password = new UserPassword($request->password());
 
@@ -39,5 +48,4 @@ final class UserCreator
 
         $this->bus->publish(...$user->pullDomainEvents());
     }
-
 }

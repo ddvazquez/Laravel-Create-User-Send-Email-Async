@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Spfc\Shared\Infrastructure\Bus\Event\InMemory;
 
@@ -14,8 +14,11 @@ use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
 
 class InMemorySymfonyEventBus implements EventBus
 {
-    private $bus;
+    private MessageBus $bus;
 
+    /**
+     * @param  iterable  $subscribers
+     */
     public function __construct(iterable $subscribers)
     {
         $this->bus = new MessageBus(
@@ -29,12 +32,17 @@ class InMemorySymfonyEventBus implements EventBus
         );
     }
 
+    /**
+     * @param  DomainEvent  ...$events
+     * @return void
+     */
     public function publish(DomainEvent ...$events): void
     {
         foreach ($events as $event) {
             try {
                 $this->bus->dispatch($event);
-            } catch (NoHandlerForMessageException $error) {}
+            } catch (NoHandlerForMessageException $error) {
+            }
         }
     }
 }
