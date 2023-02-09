@@ -2,7 +2,9 @@
 
 namespace Spfc\BoundedContext\Users\Domain;
 
-final class User
+use Spfc\Shared\Domain\Aggregate\AggregateRoot;
+
+final class User extends AggregateRoot
 {
     private UserId $id;
     private UserName $name;
@@ -24,9 +26,23 @@ final class User
         $this->password = $password;
     }
 
-    public static function create(UserId $id, UserName $name, UserEmail $email, UserPassword $password): self
+    public static function create(UserId $id, UserName $name, UserEmail $email, UserPassword $password, bool $isIdUnique, bool $isEmailUnique): self
     {
+        if(!$isIdUnique) {
+            throw new \InvalidArgumentException(
+                sprintf('<%s> id already exists.', $id)
+            );
+        }
+
+        if(!$isEmailUnique) {
+            throw new \InvalidArgumentException(
+                sprintf('<%s> email already exists.', $email)
+            );
+        }
+
         $user = new self($id, $name, $email, $password);
+
+        $user->record(new UserCreatedDomainEvent($id->value(), $name->value(), $email->value()));
 
         return $user;
     }

@@ -6,8 +6,8 @@ namespace App\Http\Controllers\Users;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Ramsey\Uuid\Uuid;
 use Spfc\BoundedContext\Users\Application\Create\CreateUserRequest;
+use Spfc\BoundedContext\Users\Application\Create\NotifyUserOnUserCreate;
 use Spfc\BoundedContext\Users\Application\Create\UserCreator;
 
 

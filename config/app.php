@@ -195,6 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Spfc\BoundedContext\Users\Infrastructure\Providers\UserServiceProvider::class,
+        Spfc\Shared\Infrastructure\Providers\SharedServiceProvider::class,
     ],
 
     /*

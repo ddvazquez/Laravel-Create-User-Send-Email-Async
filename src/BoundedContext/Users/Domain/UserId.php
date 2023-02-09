@@ -7,14 +7,8 @@ use Spfc\Shared\Domain\ValueObject\Uuid;
 
 final class UserId extends Uuid
 {
-    public function __construct(string $value, bool $isIdUnique)
+    public function __construct(string $value)
     {
-        if(!$isIdUnique) {
-            throw new \InvalidArgumentException(
-                sprintf('<%s> id already exists.', $value)
-            );
-        }
-
         parent::__construct($value);
     }
 }
