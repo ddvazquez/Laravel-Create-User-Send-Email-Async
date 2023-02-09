@@ -20,15 +20,19 @@ final class UserPutController
     }
     public function __invoke(string $id, Request $request): Response
     {
-        $this->creator->__invoke(
-            new CreateUserRequest(
-                $id,
-                $request->get('name'),
-                $request->get('email'),
-                $request->get('password')
-            )
-        );
+        try {
+            $this->creator->__invoke(
+                new CreateUserRequest(
+                    $id,
+                    $request->get('name'),
+                    $request->get('email'),
+                    $request->get('password')
+                )
+            );
 
-        return new response('', Response::HTTP_CREATED);
+            return new response('', Response::HTTP_CREATED);
+        } catch (\InvalidArgumentException $ex) {
+            return new response($ex->getMessage(), Response::HTTP_CREATED);
+        }
     }
 }

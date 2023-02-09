@@ -7,4 +7,8 @@ interface UserRepository
     public function save(User $user): void;
 
     public function search(UserId $id): ?User;
+
+    public function isEmailUnique(string $email): ?bool;
+
+    public function isIdUnique(string $id): ?bool;
 }

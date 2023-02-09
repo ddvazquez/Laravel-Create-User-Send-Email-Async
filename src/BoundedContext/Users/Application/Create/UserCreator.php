@@ -21,10 +21,15 @@ final class UserCreator
 
     public function __invoke(CreateUserRequest $request)
     {
-        $id       = new UserId($request->id());
+        $isIdUnique = $this->repository->isIdUnique($request->id());
+        $id       = new UserId($request->id(), $isIdUnique);
+
         $name     = new UserName($request->name());
-        $email = new UserEmail($request->email());
+
+        $isEmailUnique = $this->repository->isEmailUnique($request->email());
+        $email = new UserEmail($request->email(), $isEmailUnique);
         $password = new UserPassword($request->password());
+
 
         $user = User::create($id, $name, $email, $password);
 

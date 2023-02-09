@@ -34,4 +34,12 @@ final class EloquentUserRepository implements UserRepository
 
         return new User(new UserId($model->id), new UserName($model->name), new UserEmail($model->email)); // TODO
     }
+
+    public function isEmailUnique(string $email): ?bool {
+        return !UserEloquentModel::where('email', '=', $email)->count();
+    }
+
+    public function isIdUnique(string $id): ?bool {
+        return !UserEloquentModel::where('id', '=', $id)->count();
+    }
 }
