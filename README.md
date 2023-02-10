@@ -1,5 +1,13 @@
 ##  Crear un usuario y enviar email de forma asincrona
 
+- Hexagonal Architecture
+- DDD
+- Repository Pattern
+- Dependency Injection
+- Asynchronous Mysql Event Bus
+- Event-Driven Architecture
+- Uuid generation on client side
+
 ## Instrucciones de instalación
 - Clona el repo en tu pc.
 - Crea una base de datos para el proyecto.
