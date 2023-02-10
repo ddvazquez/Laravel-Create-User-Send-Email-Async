@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Spfc\Shared\Domain\ValueObject;
 
+use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Ramsey\Uuid\Uuid as RamseyUuid;
 
 class Uuid
 {
@@ -25,7 +25,7 @@ class Uuid
      */
     public static function random(): self
     {
-        return new self(RamseyUuid::uuid4()->toString());
+        return new self(Str::uuid()->toString());
     }
 
     /**
@@ -42,7 +42,7 @@ class Uuid
      */
     private function ensureIsValidUuid(string $id): void
     {
-        if (! RamseyUuid::isValid($id)) {
+        if (! Str::isUuid($id)) {
             throw new InvalidArgumentException(sprintf('<%s> does not allow the value <%s>.', static::class, $id));
         }
     }

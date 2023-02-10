@@ -12,10 +12,11 @@ use Spfc\BoundedContext\Notifications\Infrastructure\Email\LaravelNotification;
 use Spfc\Shared\Domain\Bus\Event\EventBus;
 use Spfc\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus;
 
+
 final class SharedServiceProvider extends ServiceProvider
 {
     public array $bindings = [
-        EventBus::class => InMemorySymfonyEventBus::class,
+        EventBus::class => InMemorySymfonyEventBus::class, // MySqlEloquentEventBus::class,
         Notification::class => LaravelNotification::class
     ];
 
