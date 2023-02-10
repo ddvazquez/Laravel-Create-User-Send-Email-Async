@@ -26,9 +26,6 @@ MAIL_FROM_NAME="${APP_NAME}"
     - composer install
     - php artisan key:generate
     - php artisan migrate --seed
-    - npm install
-    - npm run dev
-    - php artisan serve (o usa tu servidor web preferido)
 
 ## Instrucciones de uso
 
