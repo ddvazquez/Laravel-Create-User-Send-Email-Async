@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Spfc\Shared\Infrastructure\Bus\Event\MySql;
 
-use Illuminate\Support\Facades\DB;
 use Spfc\Shared\Domain\Bus\Event\DomainEvent;
 use Spfc\Shared\Domain\Bus\Event\EventBus;
 use Spfc\Shared\Domain\Utils;
@@ -16,16 +15,26 @@ final class MySqlEloquentEventBus implements EventBus
     private const DATABASE_TIMESTAMP_FORMAT = 'Y-m-d H:i:s';
     private Connection $connection;
 
-    public function __construct(Connection  $conection)
+    /**
+     * @param Connection $connection
+     */
+    public function __construct(Connection $connection)
     {
-        $this->connection = $conection;
+        $this->connection = $connection;
     }
 
+    /**
+     * @param DomainEvent ...$domainEvents
+     * @return void
+     */
     public function publish(DomainEvent ...$domainEvents): void
     {
         each($this->publisher(), $domainEvents);
     }
 
+    /**
+     * @return callable
+     */
     private function publisher(): callable
     {
         return function (DomainEvent $domainEvent): void {
