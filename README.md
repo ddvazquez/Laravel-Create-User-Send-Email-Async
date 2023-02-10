@@ -1,4 +1,4 @@
-##  Crear un usuario u enviar email de forma asincrona
+##  Crear un usuario y enviar email de forma asincrona
 
 ## Instrucciones de instalación
 - Clona el repo en tu pc.
