@@ -1,22 +1,23 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Spfc\Shared\Infrastructure\Bus\Event\MySql;
 
+use Illuminate\Database\Connection;
+use function Lambdish\Phunctional\each;
 use Spfc\Shared\Domain\Bus\Event\DomainEvent;
 use Spfc\Shared\Domain\Bus\Event\EventBus;
 use Spfc\Shared\Domain\Utils;
-use \Illuminate\Database\Connection;
-use function Lambdish\Phunctional\each;
 
 final class MySqlEloquentEventBus implements EventBus
 {
     private const DATABASE_TIMESTAMP_FORMAT = 'Y-m-d H:i:s';
+
     private Connection $connection;
 
     /**
-     * @param Connection $connection
+     * @param  Connection  $connection
      */
     public function __construct(Connection $connection)
     {
@@ -24,7 +25,7 @@ final class MySqlEloquentEventBus implements EventBus
     }
 
     /**
-     * @param DomainEvent ...$domainEvents
+     * @param  DomainEvent  ...$domainEvents
      * @return void
      */
     public function publish(DomainEvent ...$domainEvents): void
@@ -38,11 +39,11 @@ final class MySqlEloquentEventBus implements EventBus
     private function publisher(): callable
     {
         return function (DomainEvent $domainEvent): void {
-            $id          = $this->connection->getPdo()->quote($domainEvent->eventId());
+            $id = $this->connection->getPdo()->quote($domainEvent->eventId());
             $aggregateId = $this->connection->getPdo()->quote($domainEvent->aggregateId());
-            $name        = $this->connection->getPdo()->quote($domainEvent::eventName());
-            $body        = $this->connection->getPdo()->quote(Utils::jsonEncode($domainEvent->toPrimitives()));
-            $occurredOn  = $this->connection->getPdo()->quote(
+            $name = $this->connection->getPdo()->quote($domainEvent::eventName());
+            $body = $this->connection->getPdo()->quote(Utils::jsonEncode($domainEvent->toPrimitives()));
+            $occurredOn = $this->connection->getPdo()->quote(
                 Utils::stringToDate($domainEvent->occurredOn())->format(self::DATABASE_TIMESTAMP_FORMAT)
             );
 
@@ -52,7 +53,6 @@ final class MySqlEloquentEventBus implements EventBus
                                    VALUES ($id, $aggregateId, $name, $body, $occurredOn);
 SQL
             );
-
         };
     }
 }

@@ -13,13 +13,13 @@ use Spfc\Shared\Domain\Bus\Event\EventBus;
 use Spfc\Shared\Infrastructure\Bus\Event\DomainEventMapping;
 use Spfc\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator;
 use Spfc\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus;
-
+use Spfc\Shared\Infrastructure\Bus\Event\MySql\MySqlEloquentEventBus;
 
 final class SharedServiceProvider extends ServiceProvider
 {
     public array $bindings = [
-        EventBus::class => InMemorySymfonyEventBus::class, // MySqlEloquentEventBus::class,
-        Notification::class => LaravelNotification::class
+        EventBus::class => MySqlEloquentEventBus::class, //InMemorySymfonyEventBus::class,
+        Notification::class => LaravelNotification::class,
     ];
 
     /**

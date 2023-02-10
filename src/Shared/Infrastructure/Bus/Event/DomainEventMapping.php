@@ -1,20 +1,20 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Spfc\Shared\Infrastructure\Bus\Event;
 
-use Spfc\Shared\Domain\Bus\Event\DomainEventSubscriber;
-use RuntimeException;
 use function Lambdish\Phunctional\reduce;
 use function Lambdish\Phunctional\reindex;
+use RuntimeException;
+use Spfc\Shared\Domain\Bus\Event\DomainEventSubscriber;
 
 final class DomainEventMapping
 {
     private iterable $mapping;
 
     /**
-     * @param iterable $mapping
+     * @param  iterable  $mapping
      */
     public function __construct(iterable $mapping)
     {
@@ -22,12 +22,12 @@ final class DomainEventMapping
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return mixed
      */
     public function for(string $name)
     {
-        if (!isset($this->mapping[$name])) {
+        if (! isset($this->mapping[$name])) {
             throw new RuntimeException("The Domain Event Class for <$name> doesn't exists or have no subscribers");
         }
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Spfc\BoundedContext\Notifications\Application\Notify;
 
 use Spfc\BoundedContext\Notifications\Domain\Notification;
-use function Lambdish\Phunctional\apply;
 use Spfc\BoundedContext\Users\Domain\UserCreatedDomainEvent;
 use Spfc\Shared\Domain\Bus\Event\DomainEventSubscriber;
 
@@ -14,7 +13,7 @@ final class SendWelcomeNotificationOnUserCreated implements DomainEventSubscribe
     private Notification $notifier;
 
     /**
-     * @param  Notification $notifier
+     * @param  Notification  $notifier
      */
     public function __construct(Notification $notifier)
     {
@@ -35,6 +34,6 @@ final class SendWelcomeNotificationOnUserCreated implements DomainEventSubscribe
      */
     public function __invoke(UserCreatedDomainEvent $event): void
     {
-         $this->notifier->send($event->email(), 'Welcome', sprintf('Welcome %s', $event->name()));
+        $this->notifier->send($event->email(), 'Welcome', sprintf('Welcome %s', $event->name()));
     }
 }

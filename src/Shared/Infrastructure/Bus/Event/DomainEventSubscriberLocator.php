@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Spfc\Shared\Infrastructure\Bus\Event;
 
@@ -11,7 +11,7 @@ final class DomainEventSubscriberLocator
     private iterable $mapping;
 
     /**
-     * @param iterable $mapping
+     * @param  iterable  $mapping
      */
     public function __construct(iterable $mapping)
     {
@@ -19,10 +19,10 @@ final class DomainEventSubscriberLocator
     }
 
     /**
-     * @param string $eventClass
+     * @param  string  $eventClass
      * @return iterable
      */
-    public function for(string $eventClass):iterable
+    public function for(string $eventClass): iterable
     {
         return $this->mapping[$eventClass];
     }
