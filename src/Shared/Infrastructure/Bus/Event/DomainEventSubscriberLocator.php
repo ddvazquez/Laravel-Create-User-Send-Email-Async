@@ -5,26 +5,29 @@ declare(strict_types=1);
 namespace Spfc\Shared\Infrastructure\Bus\Event;
 
 use Spfc\Shared\Infrastructure\Bus\CallableFirstParameterExtractor;
+use Traversable;
 
 final class DomainEventSubscriberLocator
 {
-    private iterable $mapping;
+    private $mapping;
 
     /**
-     * @param  iterable  $mapping
+     * @param $mapping
      */
-    public function __construct(iterable $mapping)
+    public function __construct(Traversable $mapping)
     {
-        $this->mapping = CallableFirstParameterExtractor::forPipedCallables($mapping);
+        $this->mapping = iterator_to_array($mapping);
     }
 
     /**
-     * @param  string  $eventClass
-     * @return iterable
+     * @param string $eventClass
+     * @return array
      */
-    public function for(string $eventClass): iterable
+    public function allSubscribedTo(string $eventClass): array
     {
-        return $this->mapping[$eventClass];
+        $formatted = CallableFirstParameterExtractor::forPipedCallables($this->mapping);
+
+        return $formatted[$eventClass];
     }
 
     /**
