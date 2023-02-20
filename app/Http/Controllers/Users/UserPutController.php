@@ -40,7 +40,7 @@ final class UserPutController
 
             return new response('', Response::HTTP_CREATED);
         } catch (\InvalidArgumentException $ex) {
-            return new response($ex->getMessage(), Response::HTTP_CREATED);
+            return new response($ex->getMessage(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
 }
